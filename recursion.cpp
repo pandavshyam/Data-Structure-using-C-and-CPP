@@ -1,3 +1,6 @@
+/* The process in which a function calls itself 
+directly or indirectly is called recursion and the corresponding function is called as recursive function. */
+
 #include <iostream>
 using namespace std;
 
