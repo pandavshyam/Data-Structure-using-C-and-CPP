@@ -82,11 +82,79 @@ void InsertLast(struct Node *p, int x){
     
 }
 
+void SortedInsert(struct Node *p, int x){
+    struct Node *t,*q = NULL;
+    t = new struct Node;
+    t->data = x;
+    t->next = NULL;
+
+    if (first == NULL)
+        first = t;
+    else
+    {
+        while (p && p->data < x)
+        {
+            q = p;
+            p = p->next;
+        }
+        if (p == first){
+            t->next = p;
+            first = t;
+        }
+        else
+        {
+            t->next = q->next;
+            q->next = t;
+        }
+    }
+}
+
+int Delete(struct Node *p, int index){
+    struct Node *q = NULL;
+    int x,i;
+
+    if (index < 1){
+        return -1;
+    }
+    if (index == 1){
+        q = first;
+        x = first->data;
+        first = first->next;
+        delete q;
+        return x;
+    } else
+    {
+        for (i = 0; i < index - 1; i++){
+            q = p;
+            p = p->next;
+        }
+        q->next = p->next;
+        x = p->data;
+        delete p;
+        return x;
+    }
+    
+}
+
+int isSorted(struct Node *p){
+    int x = -65536;
+
+    while (p != NULL)
+    {
+        if (p->data < x)
+            return 0;
+        x = p->data;
+        p = p->next;
+    }
+    return 1;
+}
+
 int main(){
-    int A[] = {1,2,3,4,5};
-    InsertLast(first,2);
-    InsertLast(first,3);
-    InsertLast(first,4);
+    int A[] = {10,20,30,40,50};
+    Create(A,5);
+    Display(first);
+    cout << endl;
+    Delete(first,3);
     Display(first);
     cout << endl;
     return 0;
