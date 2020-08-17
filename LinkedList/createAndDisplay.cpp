@@ -17,7 +17,7 @@ void Create(int A[],int n){
     first->next = NULL;
     last = first;
 
-    for (i = 1; i < 8; i++){
+    for (i = 1; i < 5; i++){
         struct Node *t = new Node;
         t->data = A[i];
         t->next = NULL;
@@ -165,12 +165,64 @@ void DeleteDuplicate(struct Node *p){
     }
 }
 
+// Reverse using New Array
+// Changing only data of the node, not the links
+void Reverse1(struct Node *p){
+    struct Node *q = p;
+    int *A, i = 0;
+
+    A = new int[5];
+
+    while (q != NULL)
+    {
+        A[i] = q->data;
+        q = q->next;
+        i++;
+    }
+    i--;
+    q = p;
+
+    while (q != NULL)
+    {
+        q->data = A[i];
+        i--;
+        q = q->next;
+    }
+    delete[] A;
+    
+}
+
+// Reverse Linked List using Sliding Pointer
+void Reverse2(struct Node *p){
+    struct Node *q = NULL, *r = NULL;
+
+    while (p != NULL)
+    {
+        r = q;
+        q = p;
+        p = p->next;
+        q->next = r;
+    }
+    first = q;
+}
+
+// Reverse Linked List using Recursion
+void Reverse3(struct Node *q, struct Node *p){
+    if (p)
+    {
+        Reverse3(p, p->next);
+        p->next = q;
+    }
+    else
+        first = q;
+}
+
 int main(){
-    int A[] = {10,20,20,20,30,40,40,50};
-    Create(A,8);
+    int A[] = {10,20,30,40,50};
+    Create(A,5);
     Display(first);
     cout << endl;
-    DeleteDuplicate(first);
+    Reverse3(NULL,first);
     Display(first);
     cout << endl;
     return 0;
