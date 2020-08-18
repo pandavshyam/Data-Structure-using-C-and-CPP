@@ -8,14 +8,33 @@ struct Node
 };
 
 struct Node *first = NULL;
-struct Node *last = NULL;
+struct Node *second = NULL;
+struct Node *third = NULL;
 
 void Create(int A[],int n){
     int i;
+    struct Node *last;
     first = new struct Node;
     first->data = A[0];
     first->next = NULL;
     last = first;
+
+    for (i = 1; i < 5; i++){
+        struct Node *t = new Node;
+        t->data = A[i];
+        t->next = NULL;
+        last->next = t;
+        last = t;
+    }
+}
+
+void Create1(int A[],int n){
+    int i;
+    struct Node *last;
+    second = new struct Node;
+    second->data = A[0];
+    second->next = NULL;
+    last = second;
 
     for (i = 1; i < 5; i++){
         struct Node *t = new Node;
@@ -67,6 +86,7 @@ void Insert(struct Node *p, int index, int key){
 }
 
 void InsertLast(struct Node *p, int x){
+    struct Node *last;
     struct Node *q = new struct Node;
     q->data = x;
     q->next = NULL;
@@ -217,13 +237,47 @@ void Reverse3(struct Node *q, struct Node *p){
         first = q;
 }
 
+void Merge(struct Node *p, struct Node *q){
+    struct Node *last;
+    if (p->data < q->data){
+        third = last = p;
+        p = p->next;
+        last->next = NULL;
+    } else {
+        third = last = q;
+        q = q->next;
+        last->next = NULL;
+    }
+
+    while (p!=NULL && q!=NULL)
+    {
+        if (p->data < q->data){
+            last->next = p;
+            last = p;
+            p = p->next;
+            last->next = NULL;
+        } else {
+            last->next = q;
+            last = q;
+            q = q->next;
+            last->next = NULL;
+        }
+    }
+    if (p!=NULL) last->next = p;
+    if (q!=NULL) last->next = q;
+}
+
 int main(){
     int A[] = {10,20,30,40,50};
+    int B[] = {5,15,25,35,45};
     Create(A,5);
+    Create1(B,5);
     Display(first);
     cout << endl;
-    Reverse3(NULL,first);
-    Display(first);
+    Display(second);
+    cout << endl;
+    Merge(first,second);
+    Display(third);
     cout << endl;
     return 0;
 }
