@@ -25,6 +25,7 @@ class CircularLinkedList{
         void Display();
         void Insert(int position, int x);
         int Length();
+        int Delete(int position);
 };
 
 int CircularLinkedList::Length(){
@@ -99,10 +100,40 @@ void CircularLinkedList::Insert(int position, int x){
     }
 }
 
+int CircularLinkedList::Delete(int position){
+    Node *p = head, *q;
+    int x,i;
+
+    if (position < 0 || position > Length())
+        return -1;
+
+    if (position == 1){
+        while (p->next != head) p = p->next;
+        if (p == head){
+            x = head->data;
+            delete head;
+            head = NULL;
+        } else {
+            x = head->data;
+            p->next = head->next;
+            delete head;
+            head = p->next;
+        }
+    } else {
+        for (i = 0; i < position - 2; i++)
+            p = p->next;
+        q = p->next;
+        p->next = q->next;
+        x = q->data;
+        delete q;
+    }
+    return x;
+}
+
 int main(){
     int A[] = {1,2,3,4,5};
     CircularLinkedList p(A,5);
-    p.Insert(0,10);
+    p.Delete(1);
     p.Display();
     return 0;
 }
