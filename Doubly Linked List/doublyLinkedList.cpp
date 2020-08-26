@@ -21,6 +21,7 @@ public:
     void Insert(int position, int x);
     int Delete(int position);
     void Reverse();
+    void Reverse1();
     ~DoublyLinkedList();
 };
 
@@ -140,6 +141,20 @@ void DoublyLinkedList::Reverse(){
     cout << endl;
 }
 
+void DoublyLinkedList::Reverse1(){
+    Node *p = first, *temp;
+    while (p)
+    {
+        temp = p->next;
+        p->next = p->previous;
+        p->previous = temp;
+        p = p->previous;
+        if (p!= NULL && p->next == NULL){
+            first = p;
+        }
+    }   
+}
+
 DoublyLinkedList::~DoublyLinkedList(){
     Node *q = first;
 
@@ -155,8 +170,8 @@ DoublyLinkedList::~DoublyLinkedList(){
 int main(){
     int A[] = {10,20,30,40,50};
     DoublyLinkedList dll(A,5);
-    dll.Reverse();
-    // dll.Display();
+    dll.Reverse1();
+    dll.Display();
     // cout << dll.Length() << endl;
     return 0;
 }
